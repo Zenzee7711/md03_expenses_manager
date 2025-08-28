@@ -1,4 +1,3 @@
-// app.js
 const con = require('./db');                 
 const express = require('express');
 const bcrypt = require('bcrypt');
@@ -7,10 +6,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health
 app.get('/', (_, res) => res.json({ ok: true, service: 'MD03 Expense Manager' }));
 
-// Dev helper – quick bcrypt hash (optional)
+
 app.get('/password/:pass', async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.params.pass, 12);
@@ -20,11 +18,7 @@ app.get('/password/:pass', async (req, res) => {
   }
 });
 
-/**
- * POST /login
- * Body: { username, password }
- * 200: { userId, username } | 401: "Wrong username"/"Wrong password"
- */
+
 app.post('/login', (req, res) => {
   const { username, password } = req.body || {};
   if (!username || !password) return res.status(400).send('Missing credentials');
@@ -42,10 +36,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-/**
- * GET /expenses?userId=#
- * All expenses (standardized keys for the CLI)
- */
+
 app.get('/expenses', (req, res) => {
   const userId = Number(req.query.userId);
   if (!userId) return res.status(400).json({ error: 'userId required' });
@@ -86,10 +77,6 @@ app.get('/expenses/today', (req, res) => {
   });
 });
 
-/**
- * GET /expenses/search?userId=#&q=keyword
- * Search by substring in item (case-insensitive by default collation)
- */
 app.get('/expenses/search', (req, res) => {
   const userId = Number(req.query.userId);
   const q = (req.query.q || '').toString();
@@ -109,11 +96,6 @@ app.get('/expenses/search', (req, res) => {
   });
 });
 
-/**
- * POST /expenses
- * Body: { userId, title, amount }
- * 201: { id }
- */
 app.post('/expenses', (req, res) => {
   const { userId, title, amount } = req.body || {};
   if (!userId || !title || amount == null) {
@@ -126,10 +108,6 @@ app.post('/expenses', (req, res) => {
   });
 });
 
-/**
- * DELETE /expenses/:id?userId=#
- * Deletes only if the row belongs to userId
- */
 app.delete('/expenses/:id', (req, res) => {
   const id = Number(req.params.id);
   const userId = Number(req.query.userId);
@@ -143,6 +121,5 @@ app.delete('/expenses/:id', (req, res) => {
   });
 });
 
-// Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
