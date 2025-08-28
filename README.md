@@ -21,3 +21,9 @@ _A simple CLI + API based expense management system using Dart, Node.js (Express
 - **Version Control**: Git + GitHub  
 
 ---
+
+### Packages to install after cloning repository
+- dart pub add http
+- npm install nodemon mysql2 express bcrypt
+- start xammp
+- -npm run dev
