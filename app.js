@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health
+
 app.get('/', (_, res) => res.json({ ok: true, service: 'MD03 Expense Manager' }));
 
 // Dev helper – quick bcrypt hash (optional)
