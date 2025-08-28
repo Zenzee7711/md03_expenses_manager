@@ -199,7 +199,7 @@ Future<void> _delete() async {
   stdout.write('Item id: ');
   final id = int.tryParse(stdin.readLineSync() ?? '');
   if (id == null) {
-    print('Invalid id.');
+    print('Invalid id');
     return;
   }
 
